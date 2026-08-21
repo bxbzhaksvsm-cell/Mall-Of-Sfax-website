@@ -1,0 +1,2083 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090909">
+<meta name="description" content="Mall of Sfax — shopping, restauration, loisirs et services à Sfax.">
+<title>MALL OF SFAX — The City Inside</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#080808;
+  --surface:#111;
+  --surface2:#171717;
+  --text:#f7f4ee;
+  --muted:#a7a39c;
+  --line:rgba(255,255,255,.11);
+  --accent:#f4c95d;
+  --accent2:#d8a52d;
+  --radius:28px;
+  --max:1380px;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:"DM Sans",sans-serif;
+  overflow-x:hidden;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:100;
+  opacity:.055;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button{
+  font:inherit;
+}
+
+.container{
+  width:min(var(--max),calc(100% - 48px));
+  margin:auto;
+}
+
+.progress{
+  position:fixed;
+  top:0;
+  left:0;
+  height:3px;
+  background:var(--accent);
+  z-index:1000;
+  width:0;
+  box-shadow:0 0 18px rgba(244,201,93,.8);
+}
+
+/* NAVBAR */
+
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:500;
+  padding:18px 0;
+  transition:.4s ease;
+}
+
+header.scrolled{
+  background:rgba(8,8,8,.78);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+}
+
+.logo{
+  font-family:Manrope,sans-serif;
+  font-weight:800;
+  letter-spacing:-.06em;
+  font-size:24px;
+}
+
+.logo span{
+  color:var(--accent);
+}
+
+.navlinks{
+  display:flex;
+  gap:28px;
+  font-size:13px;
+  font-weight:600;
+}
+
+.navlinks a{
+  color:#ddd;
+  position:relative;
+}
+
+.navlinks a:after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-7px;
+  width:0;
+  height:1px;
+  background:var(--accent);
+  transition:.3s;
+}
+
+.navlinks a:hover:after{
+  width:100%;
+}
+
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.lang,
+.menu-btn{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  color:#fff;
+  padding:10px 14px;
+  border-radius:999px;
+  cursor:pointer;
+}
+
+.menu-btn{
+  display:none;
+}
+
+/* HERO */
+
+.hero{
+  min-height:100svh;
+  position:relative;
+  display:flex;
+  align-items:flex-end;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 72% 22%,rgba(244,201,93,.18),transparent 24%),
+    linear-gradient(120deg,#050505 10%,#101010 55%,#16120a 100%);
+}
+
+.hero-photo{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.94) 0%,rgba(0,0,0,.68) 42%,rgba(0,0,0,.18) 100%),
+    linear-gradient(0deg,rgba(8,8,8,.95) 0%,transparent 42%),
+    url("https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=2200&q=88") center/cover;
+  transform:scale(1.06);
+  animation:heroZoom 12s ease-out forwards;
+}
+
+@keyframes heroZoom{
+  to{
+    transform:scale(1);
+  }
+}
+
+.hero-grid{
+  position:absolute;
+  inset:0;
+  opacity:.13;
+  background-image:
+    linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+  background-size:90px 90px;
+  mask-image:linear-gradient(to bottom,black,transparent 85%);
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  padding:150px 0 70px;
+  width:min(1000px,100%);
+}
+
+.eyebrow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--accent);
+  font-size:12px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  font-weight:700;
+  margin-bottom:22px;
+}
+
+.eyebrow i{
+  width:38px;
+  height:1px;
+  background:var(--accent);
+}
+
+.hero h1{
+  font-family:Manrope,sans-serif;
+  font-size:clamp(62px,10vw,154px);
+  line-height:.82;
+  letter-spacing:-.085em;
+  max-width:1000px;
+}
+
+.hero h1 em{
+  font-style:normal;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(255,255,255,.7);
+}
+
+.hero-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:30px;
+  margin-top:40px;
+}
+
+.hero-copy{
+  max-width:540px;
+  color:#d0ccc4;
+  font-size:17px;
+  line-height:1.7;
+}
+
+.hero-cta{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  border-radius:999px;
+  padding:15px 22px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.07);
+  color:#fff;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.btn.primary{
+  background:var(--accent);
+  color:#111;
+  border-color:var(--accent);
+  font-weight:800;
+}
+
+.btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 14px 40px rgba(0,0,0,.35);
+}
+
+.hero-meta{
+  font-size:11px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:#aaa;
+  white-space:nowrap;
+}
+
+.scroll-cue{
+  position:absolute;
+  right:30px;
+  bottom:36px;
+  writing-mode:vertical-rl;
+  font-size:10px;
+  letter-spacing:.2em;
+  color:#aaa;
+}
+
+/* TICKER */
+
+.ticker{
+  overflow:hidden;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  background:#0d0d0d;
+}
+
+.ticker-track{
+  display:flex;
+  width:max-content;
+  animation:marquee 24s linear infinite;
+}
+
+.ticker span{
+  padding:18px 34px;
+  font-size:12px;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+  color:#cfcac0;
+}
+
+.ticker b{
+  color:var(--accent);
+  padding-right:12px;
+}
+
+@keyframes marquee{
+  to{
+    transform:translateX(-50%);
+  }
+}
+
+/* SECTIONS */
+
+section{
+  padding:120px 0;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:30px;
+  margin-bottom:45px;
+}
+
+.kicker{
+  font-size:11px;
+  color:var(--accent);
+  text-transform:uppercase;
+  letter-spacing:.2em;
+  font-weight:800;
+  margin-bottom:12px;
+}
+
+.section-title{
+  font-family:Manrope,sans-serif;
+  font-size:clamp(38px,5vw,74px);
+  line-height:.95;
+  letter-spacing:-.065em;
+}
+
+.section-note{
+  max-width:420px;
+  color:var(--muted);
+  line-height:1.7;
+}
+
+/* EXPLORE */
+
+.explore{
+  display:grid;
+  grid-template-columns:1.35fr .65fr;
+  gap:16px;
+}
+
+.explore-card{
+  position:relative;
+  min-height:540px;
+  border-radius:var(--radius);
+  overflow:hidden;
+  border:1px solid var(--line);
+  isolation:isolate;
+  cursor:pointer;
+}
+
+.explore-card.small{
+  min-height:262px;
+}
+
+.explore-stack{
+  display:grid;
+  gap:16px;
+}
+
+.card-bg{
+  position:absolute;
+  inset:0;
+  transition:transform .8s cubic-bezier(.2,.8,.2,1);
+}
+
+.explore-card:hover .card-bg{
+  transform:scale(1.07);
+}
+
+.shop-bg{
+  background:
+    linear-gradient(180deg,transparent 25%,rgba(0,0,0,.88)),
+    url("https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=1300&q=85") center/cover;
+}
+
+.food-bg{
+  background:
+    linear-gradient(180deg,transparent 20%,rgba(0,0,0,.9)),
+    url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=85") center/cover;
+}
+
+.city-bg{
+  background:
+    linear-gradient(180deg,transparent 20%,rgba(0,0,0,.9)),
+    url("https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1000&q=85") center/cover;
+}
+
+.card-content{
+  position:absolute;
+  inset:auto 28px 28px;
+  z-index:2;
+}
+
+.card-content .num{
+  font-size:11px;
+  color:#bbb;
+  letter-spacing:.15em;
+  margin-bottom:10px;
+}
+
+.card-content h3{
+  font-family:Manrope;
+  font-size:clamp(34px,4vw,58px);
+  letter-spacing:-.06em;
+}
+
+.card-content p{
+  color:#ccc;
+  margin-top:8px;
+  max-width:430px;
+  line-height:1.5;
+}
+
+.arrow{
+  position:absolute;
+  right:24px;
+  top:24px;
+  width:46px;
+  height:46px;
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  z-index:2;
+  transition:.3s;
+}
+
+.explore-card:hover .arrow{
+  background:var(--accent);
+  color:#111;
+  transform:rotate(-45deg);
+}
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+
+.stat{
+  padding:38px 20px;
+  border-right:1px solid var(--line);
+}
+
+.stat:last-child{
+  border-right:0;
+}
+
+.stat strong{
+  font-family:Manrope;
+  font-size:clamp(38px,5vw,70px);
+  letter-spacing:-.07em;
+}
+
+.stat p{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:7px;
+}
+
+/* DIRECTORY */
+
+.directory{
+  background:#f3efe7;
+  color:#111;
+}
+
+.directory .section-title{
+  color:#111;
+}
+
+.directory .kicker{
+  color:#8c6a16;
+}
+
+.directory .section-note{
+  color:#6e6a63;
+}
+
+.filters{
+  display:flex;
+  gap:8px;
+  overflow:auto;
+  padding-bottom:8px;
+  margin-bottom:26px;
+}
+
+.filter{
+  border:1px solid #d4cec2;
+  background:transparent;
+  padding:10px 15px;
+  border-radius:999px;
+  cursor:pointer;
+  white-space:nowrap;
+  color:#4f4b45;
+}
+
+.filter.active,
+.filter:hover{
+  background:#111;
+  color:#fff;
+  border-color:#111;
+}
+
+.store-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.store{
+  background:#fff;
+  border:1px solid #ded8cd;
+  border-radius:22px;
+  padding:24px;
+  min-height:190px;
+  transition:.35s;
+  position:relative;
+  overflow:hidden;
+}
+
+.store:hover{
+  transform:translateY(-7px);
+  box-shadow:0 22px 45px rgba(0,0,0,.09);
+}
+
+.store .tag{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:#8c6a16;
+}
+
+.store h3{
+  font-family:Manrope;
+  font-size:27px;
+  letter-spacing:-.05em;
+  margin-top:38px;
+}
+
+.store p{
+  font-size:13px;
+  color:#777;
+  margin-top:8px;
+}
+
+.store .mark{
+  position:absolute;
+  right:18px;
+  top:18px;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#111;
+  color:#fff;
+  display:grid;
+  place-items:center;
+  font-size:13px;
+}
+
+/* EXPERIENCE */
+
+.experience{
+  position:relative;
+  overflow:hidden;
+}
+
+.experience:before{
+  content:"";
+  position:absolute;
+  width:620px;
+  height:620px;
+  border-radius:50%;
+  background:rgba(244,201,93,.08);
+  filter:blur(50px);
+  right:-250px;
+  top:50px;
+}
+
+.experience-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
+}
+
+.experience-visual{
+  min-height:620px;
+  border-radius:var(--radius);
+  overflow:hidden;
+  position:relative;
+  background:
+    linear-gradient(135deg,rgba(244,201,93,.14),transparent 45%),
+    url("https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?auto=format&fit=crop&w=1200&q=85") center/cover;
+  border:1px solid var(--line);
+}
+
+.floating-card{
+  position:absolute;
+  background:rgba(12,12,12,.78);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 20px 50px rgba(0,0,0,.3);
+}
+
+.floating-card.one{
+  left:24px;
+  top:24px;
+}
+
+.floating-card.two{
+  right:24px;
+  bottom:24px;
+}
+
+.floating-card strong{
+  font-family:Manrope;
+  font-size:26px;
+}
+
+.floating-card small{
+  display:block;
+  color:#aaa;
+  margin-top:4px;
+}
+
+.feature-list{
+  margin-top:36px;
+}
+
+.feature{
+  display:grid;
+  grid-template-columns:46px 1fr;
+  gap:18px;
+  padding:22px 0;
+  border-top:1px solid var(--line);
+}
+
+.feature:last-child{
+  border-bottom:1px solid var(--line);
+}
+
+.feature-icon{
+  width:42px;
+  height:42px;
+  border:1px solid var(--line);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:var(--accent);
+}
+
+.feature h4{
+  font-size:16px;
+}
+
+.feature p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+  margin-top:4px;
+}
+
+/* VISIT */
+
+.visit{
+  background:#e8e3d9;
+  color:#111;
+}
+
+.visit-grid{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:16px;
+}
+
+.visit-panel{
+  border-radius:var(--radius);
+  background:#fff;
+  border:1px solid #d8d1c5;
+  padding:34px;
+}
+
+.hours{
+  margin-top:28px;
+}
+
+.hour-row{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  padding:15px 0;
+  border-top:1px solid rgba(0,0,0,.12);
+  font-size:14px;
+}
+
+.map{
+  min-height:420px;
+  border-radius:var(--radius);
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 65% 30%,rgba(244,201,93,.45),transparent 13%),
+    linear-gradient(135deg,#d8d1c5,#f1ede6 45%,#c9c1b3);
+}
+
+.map:before,
+.map:after{
+  content:"";
+  position:absolute;
+  background:rgba(17,17,17,.18);
+}
+
+.map:before{
+  width:130%;
+  height:3px;
+  left:-15%;
+  top:45%;
+  transform:rotate(18deg);
+  box-shadow:
+    0 100px rgba(17,17,17,.12),
+    0 -150px rgba(17,17,17,.1);
+}
+
+.map:after{
+  height:130%;
+  width:3px;
+  top:-15%;
+  left:52%;
+  transform:rotate(20deg);
+  box-shadow:
+    100px 0 rgba(17,17,17,.1),
+    -150px 0 rgba(17,17,17,.1);
+}
+
+.pin{
+  position:absolute;
+  left:57%;
+  top:42%;
+  width:64px;
+  height:64px;
+  border-radius:50% 50% 50% 0;
+  background:#111;
+  color:var(--accent);
+  transform:rotate(-45deg);
+  display:grid;
+  place-items:center;
+  box-shadow:0 20px 40px rgba(0,0,0,.2);
+  z-index:3;
+}
+
+.pin span{
+  transform:rotate(45deg);
+  font-size:22px;
+}
+
+.map-label{
+  position:absolute;
+  left:24px;
+  bottom:24px;
+  background:rgba(255,255,255,.8);
+  backdrop-filter:blur(10px);
+  padding:14px 18px;
+  border-radius:14px;
+  z-index:4;
+  font-weight:700;
+}
+
+/* FOOTER */
+
+footer{
+  padding:70px 0 30px;
+  border-top:1px solid var(--line);
+}
+
+.footer-top{
+  display:flex;
+  justify-content:space-between;
+  gap:40px;
+}
+
+.footer-brand{
+  max-width:520px;
+}
+
+.footer-brand .logo{
+  font-size:36px;
+}
+
+.footer-brand p{
+  color:var(--muted);
+  line-height:1.7;
+  margin-top:18px;
+}
+
+.footer-links{
+  display:grid;
+  grid-template-columns:repeat(2,140px);
+  gap:20px;
+}
+
+.footer-links a{
+  color:#bbb;
+  font-size:13px;
+  padding:5px 0;
+}
+
+.footer-links a:hover{
+  color:var(--accent);
+}
+
+.footer-bottom{
+  display:flex;
+  justify-content:space-between;
+  margin-top:70px;
+  padding-top:22px;
+  border-top:1px solid var(--line);
+  color:#777;
+  font-size:11px;
+}
+
+/* REVEAL */
+
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:
+    opacity .8s ease,
+    transform .8s cubic-bezier(.2,.7,.2,1);
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+/* CURSOR */
+
+.cursor{
+  position:fixed;
+  left:0;
+  top:0;
+  width:18px;
+  height:18px;
+  border:1px solid var(--accent);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:2000;
+  mix-blend-mode:difference;
+  transform:translate(-50%,-50%);
+  transition:
+    width .2s,
+    height .2s,
+    background .2s;
+}
+
+.cursor.big{
+  width:55px;
+  height:55px;
+  background:rgba(244,201,93,.15);
+}
+
+/* TABLET */
+
+@media(max-width:900px){
+
+  .navlinks{
+    display:none;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+
+  .navlinks.open{
+    display:flex;
+    position:absolute;
+    left:24px;
+    right:24px;
+    top:74px;
+    flex-direction:column;
+    background:#101010;
+    border:1px solid var(--line);
+    padding:20px;
+    border-radius:20px;
+  }
+
+  .hero-content{
+    padding-top:150px;
+  }
+
+  .hero-bottom{
+    align-items:start;
+    flex-direction:column;
+  }
+
+  .explore{
+    grid-template-columns:1fr;
+  }
+
+  .explore-card{
+    min-height:430px;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .stat:nth-child(2){
+    border-right:0;
+  }
+
+  .stat:nth-child(-n+2){
+    border-bottom:1px solid var(--line);
+  }
+
+  .store-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .experience-grid,
+  .visit-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+/* MOBILE */
+
+@media(max-width:560px){
+
+  .container{
+    width:min(100% - 28px,var(--max));
+  }
+
+  header{
+    padding:13px 0;
+  }
+
+  .logo{
+    font-size:20px;
+  }
+
+  .hero h1{
+    font-size:clamp(56px,17vw,95px);
+  }
+
+  .hero-copy{
+    font-size:15px;
+  }
+
+  .scroll-cue{
+    display:none;
+  }
+
+  section{
+    padding:85px 0;
+  }
+
+  .section-head{
+    display:block;
+  }
+
+  .section-note{
+    margin-top:18px;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .stat{
+    padding:26px 12px;
+  }
+
+  .store-grid{
+    grid-template-columns:1fr;
+  }
+
+  .store{
+    min-height:165px;
+  }
+
+  .experience-visual{
+    min-height:440px;
+  }
+
+  .footer-top{
+    display:block;
+  }
+
+  .footer-links{
+    margin-top:30px;
+  }
+
+  .footer-bottom{
+    display:block;
+    line-height:1.8;
+  }
+
+  .footer-bottom span{
+    display:block;
+  }
+
+  .cursor{
+    display:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="cursor" id="cursor"></div>
+
+<header id="header">
+  <div class="container nav">
+
+    <a class="logo" href="#top">
+      MALL<span>.</span>SFAX
+    </a>
+
+    <nav class="navlinks" id="navlinks">
+      <a href="#discover">Découvrir</a>
+      <a href="#stores">Boutiques</a>
+      <a href="#experience">Expérience</a>
+      <a href="#visit">Visiter</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="lang" onclick="toggleLanguage()">FR / EN</button>
+      <button class="menu-btn" id="menuBtn">MENU</button>
+    </div>
+
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <div class="hero-photo"></div>
+  <div class="hero-grid"></div>
+
+  <div class="container hero-content">
+
+    <div class="eyebrow reveal">
+      <i></i>
+      Sfax · Tunisie · Destination shopping
+    </div>
+
+    <h1 class="reveal">
+      THE<br>
+      <em>CITY</em><br>
+      INSIDE.
+    </h1>
+
+    <div class="hero-bottom reveal">
+
+      <p class="hero-copy">
+        Plus qu'un centre commercial.
+        Un lieu pour découvrir, acheter, manger,
+        se retrouver et vivre Sfax autrement.
+      </p>
+
+      <div>
+
+        <div class="hero-cta">
+
+          <a class="btn primary" href="#discover">
+            Explorer le Mall <span>↗</span>
+          </a>
+
+          <a class="btn" href="#visit">
+            Préparer ma visite
+          </a>
+
+        </div>
+
+        <div class="hero-meta" style="margin-top:14px">
+          Sakiet Ezzit · Route de Tunis · Sfax
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="scroll-cue">
+    SCROLL TO EXPLORE ↓
+  </div>
+
+</section>
+
+<!-- TICKER -->
+
+<div class="ticker">
+
+  <div class="ticker-track">
+
+    <span><b>✦</b> SHOP</span>
+    <span><b>✦</b> DINE</span>
+    <span><b>✦</b> PLAY</span>
+    <span><b>✦</b> DISCOVER</span>
+
+    <span><b>✦</b> SHOP</span>
+    <span><b>✦</b> DINE</span>
+    <span><b>✦</b> PLAY</span>
+    <span><b>✦</b> DISCOVER</span>
+
+    <span><b>✦</b> SHOP</span>
+    <span><b>✦</b> DINE</span>
+    <span><b>✦</b> PLAY</span>
+    <span><b>✦</b> DISCOVER</span>
+
+  </div>
+
+</div>
+
+<!-- DISCOVER -->
+
+<section id="discover">
+
+  <div class="container">
+
+    <div class="section-head reveal">
+
+      <div>
+
+        <div class="kicker">
+          01 / Explore
+        </div>
+
+        <h2 class="section-title">
+          Tout ce que<br>
+          vous aimez.
+        </h2>
+
+      </div>
+
+      <p class="section-note">
+        130+ magasins, un hypermarché,
+        des espaces de loisirs, une offre
+        restauration et des services pensés
+        pour rendre chaque visite plus simple.
+      </p>
+
+    </div>
+
+    <div class="explore reveal">
+
+      <a class="explore-card" href="#stores">
+
+        <div class="card-bg shop-bg"></div>
+
+        <div class="arrow">
+          ↗
+        </div>
+
+        <div class="card-content">
+
+          <div class="num">
+            01 — SHOP
+          </div>
+
+          <h3>
+            Mode & style
+          </h3>
+
+          <p>
+            Mode, beauté, accessoires, sport,
+            maison, culture et bien plus.
+          </p>
+
+        </div>
+
+      </a>
+
+      <div class="explore-stack">
+
+        <a class="explore-card small" href="#restaurants">
+
+          <div class="card-bg food-bg"></div>
+
+          <div class="arrow">
+            ↗
+          </div>
+
+          <div class="card-content">
+
+            <div class="num">
+              02 — DINE
+            </div>
+
+            <h3>
+              À table.
+            </h3>
+
+            <p>
+              Restaurants, fast-foods,
+              glaciers, crêperies et salons de thé.
+            </p>
+
+          </div>
+
+        </a>
+
+        <a class="explore-card small" href="#experience">
+
+          <div class="card-bg city-bg"></div>
+
+          <div class="arrow">
+            ↗
+          </div>
+
+          <div class="card-content">
+
+            <div class="num">
+              03 — EXPERIENCE
+            </div>
+
+            <h3>
+              Vivez plus.
+            </h3>
+
+            <p>
+              Loisirs, automobile, services
+              et espaces pour toute la famille.
+            </p>
+
+          </div>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- STATS -->
+
+<div class="container">
+
+  <div class="stats reveal">
+
+    <div class="stat">
+      <strong>130+</strong>
+      <p>magasins & enseignes</p>
+    </div>
+
+    <div class="stat">
+      <strong>24/7</strong>
+      <p>wifi gratuit dans le centre</p>
+    </div>
+
+    <div class="stat">
+      <strong>01</strong>
+      <p>destination shopping à découvrir</p>
+    </div>
+
+    <div class="stat">
+      <strong>∞</strong>
+      <p>raisons de revenir</p>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- DIRECTORY -->
+
+<section class="directory" id="stores">
+
+  <div class="container">
+
+    <div class="section-head reveal">
+
+      <div>
+
+        <div class="kicker">
+          02 / Directory
+        </div>
+
+        <h2 class="section-title">
+          Find your<br>
+          favourite.
+        </h2>
+
+      </div>
+
+      <p class="section-note">
+        Une sélection d'enseignes actuellement
+        référencées par Mall of Sfax.
+      </p>
+
+    </div>
+
+    <div class="filters reveal">
+
+      <button class="filter active" data-filter="all">
+        Tout
+      </button>
+
+      <button class="filter" data-filter="mode">
+        Mode
+      </button>
+
+      <button class="filter" data-filter="beaute">
+        Beauté
+      </button>
+
+      <button class="filter" data-filter="maison">
+        Maison
+      </button>
+
+      <button class="filter" data-filter="sport">
+        Sport
+      </button>
+
+      <button class="filter" data-filter="hypermarché">
+        Hypermarché
+      </button>
+
+    </div>
+
+    <div class="store-grid" id="storeGrid">
+
+      <article class="store reveal" data-cat="mode">
+
+        <span class="tag">
+          Mode
+        </span>
+
+        <span class="mark">
+          01
+        </span>
+
+        <h3>
+          LC Waikiki
+        </h3>
+
+        <p>
+          Mode homme · femme · enfant · accessoires
+        </p>
+
+      </article>
+
+      <article class="store reveal" data-cat="mode">
+
+        <span class="tag">
+          Mode & accessoires
+        </span>
+
+        <span class="mark">
+          02
+        </span>
+
+        <h3>
+          Parfois
+        </h3>
+
+        <p>
+          Sacs · accessoires · prêt-à-porter
+        </p>
+
+      </article>
+
+      <article class="store reveal" data-cat="hypermarché">
+
+        <span class="tag">
+          Hypermarché
+        </span>
+
+        <span class="mark">
+          03
+        </span>
+
+        <h3>
+          Carrefour
+        </h3>
+
+        <p>
+          Courses · grande distribution
+        </p>
+
+      </article>
+
+      <article class="store reveal" data-cat="beaute">
+
+        <span class="tag">
+          Beauté
+        </span>
+
+        <span class="mark">
+          04
+        </span>
+
+        <h3>
+          Beauté & soins
+        </h3>
+
+        <p>
+          Explorez les enseignes beauté du Mall
+        </p>
+
+      </article>
+
+      <article class="store reveal" data-cat="sport">
+
+        <span class="tag">
+          Sport
+        </span>
+
+        <span class="mark">
+          05
+        </span>
+
+        <h3>
+          Sport
+        </h3>
+
+        <p>
+          Équipement · mode sportive · loisirs
+        </p>
+
+      </article>
+
+      <article class="store reveal" data-cat="maison">
+
+        <span class="tag">
+          Maison
+        </span>
+
+        <span class="mark">
+          06
+        </span>
+
+        <h3>
+          Maison & multimédia
+        </h3>
+
+        <p>
+          Découvrez les enseignes de l'univers maison
+        </p>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- RESTAURANTS -->
+
+<section id="restaurants">
+
+  <div class="container">
+
+    <div class="section-head reveal">
+
+      <div>
+
+        <div class="kicker">
+          03 / Food
+        </div>
+
+        <h2 class="section-title">
+          Come hungry.<br>
+          Leave happy.
+        </h2>
+
+      </div>
+
+      <p class="section-note">
+        Le Mall réunit restaurants,
+        fast-foods, glaciers, crêperies,
+        pâtisseries et salons de thé
+        pour toutes les envies.
+      </p>
+
+    </div>
+
+    <div class="explore">
+
+      <div class="explore-card reveal" style="min-height:430px">
+
+        <div class="card-bg food-bg"></div>
+
+        <div class="arrow">
+          ↗
+        </div>
+
+        <div class="card-content">
+
+          <div class="num">
+            FOOD HALL
+          </div>
+
+          <h3>
+            Une pause ?
+          </h3>
+
+          <p>
+            Du déjeuner rapide à la pause café,
+            composez votre expérience.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="visit-panel reveal"
+           style="background:#151515;color:#fff;border-color:#252525;display:flex;flex-direction:column;justify-content:center">
+
+        <div class="kicker">
+          Choose your mood
+        </div>
+
+        <h3 style="font-family:Manrope;font-size:46px;letter-spacing:-.06em">
+          🍔 Fast<br>
+          🍦 Sweet<br>
+          ☕ Slow
+        </h3>
+
+        <p style="color:#aaa;line-height:1.7;margin-top:22px">
+          Une future version peut intégrer
+          la recherche par cuisine, budget,
+          étage, horaires et disponibilité.
+        </p>
+
+        <a href="#visit"
+           class="btn primary"
+           style="width:max-content;margin-top:25px">
+
+          Planifier ma visite →
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- EXPERIENCE -->
+
+<section class="experience" id="experience">
+
+  <div class="container experience-grid">
+
+    <div class="experience-visual reveal">
+
+      <div class="floating-card one">
+
+        <strong>
+          FREE Wi-Fi
+        </strong>
+
+        <small>
+          Dans tout le centre
+        </small>
+
+      </div>
+
+      <div class="floating-card two">
+
+        <strong>
+          Parking
+        </strong>
+
+        <small>
+          Gratuit · voitures & motos
+        </small>
+
+      </div>
+
+    </div>
+
+    <div class="reveal">
+
+      <div class="kicker">
+        04 / More than shopping
+      </div>
+
+      <h2 class="section-title">
+        Pensé pour<br>
+        votre journée.
+      </h2>
+
+      <p style="color:var(--muted);line-height:1.8;margin-top:22px">
+        Le Mall propose aussi une série
+        de services pour rendre votre passage
+        plus confortable et pratique.
+      </p>
+
+      <div class="feature-list">
+
+        <div class="feature">
+
+          <div class="feature-icon">
+            ⌁
+          </div>
+
+          <div>
+
+            <h4>
+              Point d'accueil
+            </h4>
+
+            <p>
+              Une équipe pour vous orienter
+              et répondre à vos questions.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="feature">
+
+          <div class="feature-icon">
+            ◎
+          </div>
+
+          <div>
+
+            <h4>
+              Banques & GAB
+            </h4>
+
+            <p>
+              Des services bancaires disponibles
+              au sein du Mall.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="feature">
+
+          <div class="feature-icon">
+            ✦
+          </div>
+
+          <div>
+
+            <h4>
+              Coworking
+            </h4>
+
+            <p>
+              Un espace au premier étage
+              pour travailler ou réviser.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="feature">
+
+          <div class="feature-icon">
+            ◌
+          </div>
+
+          <div>
+
+            <h4>
+              Salle de prière
+            </h4>
+
+            <p>
+              Située au premier étage.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- VISIT -->
+
+<section class="visit" id="visit">
+
+  <div class="container">
+
+    <div class="section-head reveal">
+
+      <div>
+
+        <div class="kicker">
+          05 / Visit
+        </div>
+
+        <h2 class="section-title">
+          Your next<br>
+          stop: Sfax.
+        </h2>
+
+      </div>
+
+      <p class="section-note">
+        Retrouvez les horaires publiés
+        et préparez votre itinéraire vers
+        Mall of Sfax.
+      </p>
+
+    </div>
+
+    <div class="visit-grid">
+
+      <div class="visit-panel reveal">
+
+        <div class="kicker">
+          Horaires
+        </div>
+
+        <h3 style="font-family:Manrope;font-size:34px;letter-spacing:-.05em">
+          Planifiez votre passage.
+        </h3>
+
+        <div class="hours">
+
+          <div class="hour-row">
+            <span>Boutiques · Dim–Jeu</span>
+            <strong>10:00 — 21:00</strong>
+          </div>
+
+          <div class="hour-row">
+            <span>Boutiques · Ven–Sam</span>
+            <strong>10:00 — 22:00</strong>
+          </div>
+
+          <div class="hour-row">
+            <span>Restaurants & jeux · Dim–Jeu</span>
+            <strong>10:00 — 22:00</strong>
+          </div>
+
+          <div class="hour-row">
+            <span>Restaurants & jeux · Ven–Sam</span>
+            <strong>10:00 — 23:00</strong>
+          </div>
+
+          <div class="hour-row">
+            <span>Hypermarché · Dim–Jeu</span>
+            <strong>09:30 — 22:00</strong>
+          </div>
+
+          <div class="hour-row">
+            <span>Hypermarché · Ven–Sam</span>
+            <strong>09:30 — 23:00</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="map reveal">
+
+        <div class="pin">
+          <span>●</span>
+        </div>
+
+        <div class="map-label">
+          Mall of Sfax · Sakiet Ezzit · Sfax
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<!-- FOOTER -->
+
+<footer>
+
+  <div class="container">
+
+    <div class="footer-top">
+
+      <div class="footer-brand">
+
+        <div class="logo">
+          MALL<span>.</span>SFAX
+        </div>
+
+        <p>
+          Shopping · restauration · loisirs · services.<br>
+          Une destination pour toute la région de Sfax.
+        </p>
+
+      </div>
+
+      <div class="footer-links">
+
+        <div>
+
+          <a href="#stores">
+            Boutiques
+          </a>
+
+          <a href="#restaurants">
+            Restaurants
+          </a>
+
+          <a href="#experience">
+            Services
+          </a>
+
+        </div>
+
+        <div>
+
+          <a href="#visit">
+            Horaires
+          </a>
+
+          <a href="#visit">
+            Plan
+          </a>
+
+          <a href="tel:+21695999555">
+            +216 95 999 555
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      <span>
+        © 2026 Mall of Sfax — Prototype concept
+      </span>
+
+      <span>
+        Made for a better digital mall experience ✦
+      </span>
+
+    </div>
+
+  </div>
+
+</footer>
+
+<script>
+
+/* HEADER + SCROLL PROGRESS */
+
+const header = document.getElementById("header");
+const progress = document.getElementById("progress");
+
+window.addEventListener("scroll", () => {
+
+  header.classList.toggle(
+    "scrolled",
+    scrollY > 40
+  );
+
+  const max =
+    document.documentElement.scrollHeight -
+    innerHeight;
+
+  progress.style.width =
+    (scrollY / max * 100) + "%";
+
+}, { passive:true });
+
+
+/* MOBILE MENU */
+
+const menuBtn =
+  document.getElementById("menuBtn");
+
+const navlinks =
+  document.getElementById("navlinks");
+
+menuBtn?.addEventListener("click", () => {
+
+  navlinks.classList.toggle("open");
+
+});
+
+navlinks.querySelectorAll("a").forEach(a => {
+
+  a.addEventListener("click", () => {
+
+    navlinks.classList.remove("open");
+
+  });
+
+});
+
+
+/* SCROLL REVEAL */
+
+const observer =
+  new IntersectionObserver(
+    entries => {
+
+      entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+
+          entry.target.classList.add("visible");
+
+        }
+
+      });
+
+    },
+    {
+      threshold:.12
+    }
+  );
+
+document
+  .querySelectorAll(".reveal")
+  .forEach(el => observer.observe(el));
+
+
+/* STORE FILTERS */
+
+document
+  .querySelectorAll(".filter")
+  .forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      document
+        .querySelectorAll(".filter")
+        .forEach(btn =>
+          btn.classList.remove("active")
+        );
+
+      button.classList.add("active");
+
+      const filter =
+        button.dataset.filter;
+
+      document
+        .querySelectorAll(".store")
+        .forEach(card => {
+
+          const show =
+            filter === "all" ||
+            card.dataset.cat === filter;
+
+          card.style.display =
+            show ? "block" : "none";
+
+        });
+
+    });
+
+  });
+
+
+/* CUSTOM CURSOR */
+
+const cursor =
+  document.getElementById("cursor");
+
+document
+  .querySelectorAll(
+    ".btn,.explore-card,.store,.filter"
+  )
+  .forEach(element => {
+
+    element.addEventListener(
+      "mouseenter",
+      () => cursor.classList.add("big")
+    );
+
+    element.addEventListener(
+      "mouseleave",
+      () => cursor.classList.remove("big")
+    );
+
+  });
+
+window.addEventListener(
+  "mousemove",
+  event => {
+
+    cursor.style.left =
+      event.clientX + "px";
+
+    cursor.style.top =
+      event.clientY + "px";
+
+  }
+);
+
+
+/* LANGUAGE BUTTON */
+
+function toggleLanguage(){
+
+  alert(
+    "Version EN : interface prête à être localisée. Le prototype est actuellement optimisé en français."
+  );
+
+}
+
+</script>
+
+</body>
+  </html>
