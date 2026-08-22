@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0908">
+<title>Mall of Sfax — L'expérience</title>
+<meta name="description" content="Mall of Sfax : shopping, restauration, loisirs et services à Sakiet Ezzit, Sfax.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  // guarded: if the CDN script is blocked by the viewing environment
+  // (some in-app file previewers strip external scripts entirely),
+  // this fails silently instead of throwing an uncaught error that
+  // could interfere with the rest of the page.
+  if (window.tailwind) {
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:   { DEFAULT:'#0a0908', 2:'#131110', 3:'#1b1815' },
+            sand:  { DEFAULT:'#f2ecdf', 2:'#e8dfca', ink:'#1b1712' },
+            terracotta: { DEFAULT:'#bd5c39', 2:'#e07a4e', dim:'#7a4530' },
+            stone: { DEFAULT:'#8f8776', dim:'#5c574a' }
+          },
+          fontFamily: {
+            display: ['Fraunces','serif'],
+            body: ['Inter','sans-serif'],
+            mono: ['"JetBrains Mono"','monospace']
+          }
+        }
+      }
+    }
+  } else {
+    console.warn('Tailwind CDN script did not load — the browser/viewer blocked the external request. Open this file in a full browser (Chrome, Safari, Firefox) rather than an in-app file previewer.');
+  }
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,440;9..144,560;9..144,650&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* the handful of things Tailwind utilities genuinely can't express:
+     variable-font axes, keyframes, SVG-pattern fills, custom cursor. */
+  html{ scroll-behavior:auto; }
+  body{ -webkit-font-smoothing:antialiased; }
+  ::selection{ background:#e07a4e; color:#0a0908; }
+  :focus-visible{ outline:2px solid #e07a4e; outline-offset:3px; }
+
+  .fv-hero{ font-variation-settings:'opsz' 60,'wght' 560; }
+  .fv-display{ font-variation-settings:'opsz' 40,'wght' 560; }
+  .fv-italic-lead{ font-variation-settings:'opsz' 60,'wght' 400; font-style:italic; }
+
+  .lattice-bg{ background-image:
+      linear-gradient(45deg, currentColor 1px, transparent 1px),
+      linear-gradient(-45deg, currentColor 1px, transparent 1px);
+    background-size:32px 32px; }
+
+  .arch-clip{ clip-path: ellipse(50% 62% at 50% 42%); }
+
+  @keyframes marquee{ to{ transform:translateX(-50%); } }
+  .marquee-track{ animation:marquee 30s linear infinite; }
+
+  .cursor-ring{ position:fixed; top:0; left:0; width:34px; height:34px; border-radius:9999px; border:1px solid rgba(224,122,78,.7);
+    pointer-events:none; z-index:9998; transform:translate(-50%,-50%); mix-blend-mode:exclusion;
+    transition:width .25s ease, height .25s ease, border-color .25s ease; }
+  .cursor-ring.big{ width:60px; height:60px; border-color:#e07a4e; }
+  .cursor-dot{ position:fixed; top:0; left:0; width:5px; height:5px; border-radius:9999px; background:#e07a4e;
+    pointer-events:none; z-index:9998; transform:translate(-50%,-50%); }
+
+  .char{ display:inline-block; will-change:transform,opacity; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; transition-duration:.2s !important; }
+    .cursor-ring, .cursor-dot{ display:none !important; }
+  }
+</style>
+</head>
+
+<body class="bg-ink text-sand font-body overflow-x-clip">
+
+<!-- signature geometry: SVG defs (lattice pattern / arch symbol / icon sprite) -->
+<svg width="0" height="0" class="absolute" aria-hidden="true">
+  <defs>
+    <pattern id="lattice" width="46" height="46" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path d="M23 0 L46 23 L23 46 L0 23 Z" fill="none" stroke="currentColor" stroke-width="1"/>
+      <path d="M23 13 L33 23 L23 33 L13 23 Z" fill="none" stroke="currentColor" stroke-width="1"/>
+      <circle cx="23" cy="23" r="1.4" fill="currentColor"/>
+    </pattern>
+    <symbol id="horseshoeArch" viewBox="0 0 160 210">
+      <path d="M14,205 L14,92 A66,66 0 1 1 146,92 L146,205" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+      <path d="M40,205 L40,96 A40,40 0 1 1 120,96 L120,205" stroke-width="1" vector-effect="non-scaling-stroke" opacity=".6"/>
+    </symbol>
+    <symbol id="icon-bag" viewBox="0 0 24 24"><path d="M6 8h12l1 13H5L6 8Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+    <symbol id="icon-fork" viewBox="0 0 24 24"><path d="M7 2v8a2 2 0 0 0 4 0V2M9 10v12M17 2c-2 2-2 5-2 7a2 2 0 0 0 4 0c0-2 0-5-2-7ZM17 12v10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="icon-spark" viewBox="0 0 24 24"><path d="M12 2l2.2 7.3L21 12l-6.8 2.7L12 22l-2.2-7.3L3 12l6.8-2.7L12 2Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-wifi" viewBox="0 0 24 24"><path d="M2 8.5a16 16 0 0 1 20 0M5.5 12.3a11 11 0 0 1 13 0M9 16a6 6 0 0 1 6 0" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="19.5" r="1.1" fill="currentColor"/></symbol>
+    <symbol id="icon-park" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M9 17V7h4a3 3 0 0 1 0 6H9" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+    <symbol id="icon-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+    <symbol id="icon-pin" viewBox="0 0 24 24"><path d="M12 22s7-7.4 7-12.6A7 7 0 0 0 5 9.4C5 14.6 12 22 12 22Z" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="9.3" r="2.4" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+    <symbol id="icon-shirt" viewBox="0 0 24 24"><path d="M8 4 4 7l2 3 2-1v11h8V9l2 1 2-3-4-3-2 2h-2L8 4Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-cart" viewBox="0 0 24 24"><path d="M3 4h2l2.4 12.2A2 2 0 0 0 9.4 18H18a2 2 0 0 0 2-1.6L21 9H6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="21" r="1.2" fill="currentColor"/><circle cx="18" cy="21" r="1.2" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- NAV -->
+<nav id="nav" class="fixed inset-x-0 top-0 z-[600] h-20 flex items-center justify-between px-6 md:px-16 backdrop-blur-xl border-b border-transparent transition-colors duration-500 bg-ink/40">
+  <a id="dockedLogo" data-scroll-target="hero" href="#hero" class="opacity-0 font-display fv-display text-lg tracking-tight text-sand">MALL<em class="not-italic text-terracotta-2">.</em>SFAX</a>
+  <div class="hidden md:flex items-center gap-10 text-sm text-sand/80">
+    <a data-scroll-target="pillars" data-fr="L'expérience" data-en="Experience" class="relative cursor-pointer hover:text-terracotta-2 transition-colors">L'expérience</a>
+    <a data-scroll-target="boutiques" data-fr="Boutiques" data-en="Stores" class="relative cursor-pointer hover:text-terracotta-2 transition-colors">Boutiques</a>
+    <a data-scroll-target="visit" data-fr="Infos pratiques" data-en="Visit" class="relative cursor-pointer hover:text-terracotta-2 transition-colors">Infos pratiques</a>
+    <a data-scroll-target="location" data-fr="Localisation" data-en="Location" class="relative cursor-pointer hover:text-terracotta-2 transition-colors">Localisation</a>
+  </div>
+  <div class="flex items-center gap-2">
+    <button id="languageBtn" class="font-mono text-xs font-semibold tracking-wide border border-sand/20 bg-sand/5 text-sand px-4 py-2.5 rounded-full hover:bg-terracotta-2 hover:border-terracotta-2 hover:text-ink transition-all duration-300 hover:-translate-y-0.5">FR / EN</button>
+    <button id="burgerBtn" aria-label="Menu" aria-expanded="false" class="md:hidden w-10 h-10 flex items-center justify-center rounded-full border border-sand/20 bg-sand/5">☰</button>
+  </div>
+</nav>
+
+<div id="mobileMenu" class="md:hidden fixed top-16 inset-x-0 z-[590] bg-ink/98 backdrop-blur-xl border-b border-white/10 flex-col px-6 pb-6 -translate-y-2 opacity-0 pointer-events-none transition-all duration-300 flex">
+  <a data-scroll-target="pillars" data-fr="L'expérience" data-en="Experience" class="py-4 border-b border-white/10 cursor-pointer">L'expérience</a>
+  <a data-scroll-target="boutiques" data-fr="Boutiques" data-en="Stores" class="py-4 border-b border-white/10 cursor-pointer">Boutiques</a>
+  <a data-scroll-target="visit" data-fr="Infos pratiques" data-en="Visit" class="py-4 border-b border-white/10 cursor-pointer">Infos pratiques</a>
+  <a data-scroll-target="location" data-fr="Localisation" data-en="Location" class="py-4 cursor-pointer">Localisation</a>
+</div>
+
+<!-- HERO -->
+<section id="hero" class="relative h-screen min-h-[640px] flex flex-col items-center justify-center overflow-hidden text-center bg-ink">
+  <div class="absolute inset-0" style="background:radial-gradient(ellipse 70% 55% at 50% 28%, rgba(189,92,57,.16), transparent 60%);"></div>
+  <div class="absolute inset-0 text-white/[0.07] lattice-bg" aria-hidden="true"></div>
+
+  <div class="absolute left-1/2 bottom-0 -translate-x-1/2 pointer-events-none" aria-hidden="true">
+    <svg class="arch-layer absolute bottom-0 left-1/2 -translate-x-1/2 stroke-terracotta fill-none opacity-0" data-depth=".18" data-target-opacity=".14" style="width:min(58vw,720px)" viewBox="0 0 160 210"><use href="#horseshoeArch"/></svg>
+    <svg class="arch-layer absolute bottom-0 left-1/2 -translate-x-1/2 stroke-terracotta fill-none opacity-0" data-depth=".35" data-target-opacity=".26" style="width:min(44vw,560px)" viewBox="0 0 160 210"><use href="#horseshoeArch"/></svg>
+    <svg class="arch-layer absolute bottom-0 left-1/2 -translate-x-1/2 stroke-terracotta fill-none opacity-0" data-depth=".6" data-target-opacity=".42" style="width:min(31vw,400px)" viewBox="0 0 160 210"><use href="#horseshoeArch"/></svg>
+  </div>
+
+  <div class="relative z-10 flex flex-col items-center px-5">
+    <div id="heroEyebrow" class="opacity-0 font-mono text-[11px] tracking-[0.4em] uppercase text-stone mb-7">SAKIET EZZIT · SFAX</div>
+    <h1 id="heroWordmark" class="font-display fv-hero leading-[0.85] tracking-tight text-[clamp(50px,12.4vw,164px)]">MALL OF <span class="text-terracotta-2">SFAX</span></h1>
+    <p id="heroTagline" class="opacity-0 mt-8 max-w-lg text-stone/90 text-base md:text-lg leading-relaxed"
+       data-fr="Une destination de shopping, de restauration, de loisirs et de services pensée pour toute la famille."
+       data-en="A destination for shopping, dining, entertainment and services, designed for the whole family.">
+      Une destination de shopping, de restauration, de loisirs et de services pensée pour toute la famille.
+    </p>
+  </div>
+
+  <div id="heroScrollCue" class="opacity-0 absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3 font-mono text-[10px] tracking-[0.32em] uppercase text-stone">
+    <span data-fr="Défiler" data-en="Scroll">Défiler</span>
+    <div class="w-px h-9" style="background:linear-gradient(#e07a4e, transparent);"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="overflow-hidden whitespace-nowrap border-y border-white/10 py-4 bg-ink">
+  <div class="inline-block marquee-track">
+    <span class="font-mono text-xs tracking-[0.22em] mx-8 text-stone">SHOPPING</span><b class="text-terracotta-2">◆</b>
+    <span class="font-mono text-xs tracking-[0.22em] mx-8 text-stone">RESTAURATION</span><b class="text-terracotta-2">◆</b>
+    <span class="font-mono text-xs tracking-[0.22em] mx-8 text-stone">LOISIRS</span><b class="text-terracotta-2">◆</b>
+    <span class="font-mono text-xs tracking-[0.22em] mx-8 text-stone">SERVICES</span><b class="text-terracotta-2">◆</b>
+    <span class="font-mono text-xs tracking-[0.22em] mx-8 text-stone">FAMILLE</span><b class="text-terracotta-2">◆</b>
+    <span class="font-mono text-xs tracking-[0.22em] mx-8 text-stone">MALL OF SFAX</span><b class="text-terracotta-2">◆</b>
+    <span class="font-mono text-xs tracking-[0.22em] mx-8 text-stone">SHOPPING</span><b class="text-terracotta-2">◆</b>
+    <span class="font-mono text-xs tracking-[0.22em] mx-8 text-stone">RESTAURATION</span><b class="text-terracotta-2">◆</b>
+    <span class="font-mono text-xs tracking-[0.22em] mx-8 text-stone">LOISIRS</span><b class="text-terracotta-2">◆</b>
+    <span class="font-mono text-xs tracking-[0.22em] mx-8 text-stone">SERVICES</span><b class="text-terracotta-2">◆</b>
+  </div>
+</div>
+
+<!-- INTRO -->
+<section class="bg-sand text-sand-ink px-6 md:px-16 py-32 md:py-40">
+  <div class="reveal-group inline-flex items-center gap-3 text-terracotta font-mono text-[11px] tracking-[0.24em] uppercase mb-8">
+    <span class="reveal-item text-stone">01</span><span class="reveal-item">/ BIENVENUE</span>
+  </div>
+  <div class="grid md:grid-cols-[1.6fr_1fr] gap-12 md:gap-20 items-start">
+    <p class="reveal-group font-display fv-italic-lead not-italic text-2xl md:text-4xl leading-snug"
+       data-fr='<span class="float-left text-terracotta font-display" style="font-size:110px; line-height:.78; font-variation-settings:&quot;wght&quot; 650; padding:6px 12px 0 0;">M</span><span class="reveal-item">all of Sfax rassemble shopping, restauration, loisirs et services dans une destination moderne au cœur de la région de Sfax — pensée comme les souks et les riads : une lumière filtrée, des parcours qui se croisent, un lieu que l’on habite plus qu’on ne le traverse.</span>'
+       data-en='<span class="float-left text-terracotta font-display" style="font-size:110px; line-height:.78; font-variation-settings:&quot;wght&quot; 650; padding:6px 12px 0 0;">M</span><span class="reveal-item">all of Sfax brings shopping, dining, entertainment and services together in a modern destination in the Sfax region — conceived like the souks and riads before it: filtered light, crossing paths, a place you inhabit rather than pass through.</span>'>
+      <span class="float-left text-terracotta font-display" style="font-size:110px; line-height:.78; font-variation-settings:'wght' 650; padding:6px 12px 0 0;">M</span>
+      <span class="reveal-item">all of Sfax rassemble shopping, restauration, loisirs et services dans une destination moderne au cœur de la région de Sfax — pensée comme les souks et les riads : une lumière filtrée, des parcours qui se croisent, un lieu que l’on habite plus qu’on ne le traverse.</span>
+    </p>
+    <div class="reveal-group grid grid-cols-2 md:grid-cols-1 gap-6 md:gap-8 border-t md:border-t-0 md:border-l border-black/10 pt-8 md:pt-0 md:pl-9">
+      <div class="reveal-item"><div class="font-mono text-3xl md:text-4xl text-terracotta tracking-tight">130+</div><div class="mt-1 text-xs md:text-sm text-black/50" data-fr="Magasins" data-en="Stores">Magasins</div></div>
+      <div class="reveal-item"><div class="font-mono text-3xl md:text-4xl text-terracotta tracking-tight">01</div><div class="mt-1 text-xs md:text-sm text-black/50" data-fr="Hypermarché" data-en="Hypermarket">Hypermarché</div></div>
+      <div class="reveal-item"><div class="font-mono text-3xl md:text-4xl text-terracotta tracking-tight">7j/7</div><div class="mt-1 text-xs md:text-sm text-black/50" data-fr="Ouvert toute la semaine" data-en="Open every day">Ouvert toute la semaine</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section id="pillars" class="px-6 md:px-16 py-32 md:py-40">
+  <div class="reveal-group flex flex-wrap justify-between items-end gap-6 mb-14">
+    <div>
+      <div class="inline-flex items-center gap-3 text-terracotta-2 font-mono text-[11px] tracking-[0.24em] uppercase mb-6">
+        <span class="reveal-item text-stone">02</span><span class="reveal-item">/ L'EXPÉRIENCE</span>
+      </div>
+      <h2 class="reveal-item font-display fv-display text-4xl md:text-6xl tracking-tight" data-fr="Tout au même endroit." data-en="Everything in one place.">Tout au même endroit.</h2>
+    </div>
+    <a data-scroll-target="boutiques" class="reveal-item group inline-flex items-center gap-2 border border-white/20 rounded-full px-7 py-4 text-sm font-semibold cursor-pointer transition-all duration-500 hover:border-terracotta-2 hover:text-terracotta-2 hover:-translate-y-1" data-fr="Explorer les boutiques →" data-en="Explore the stores →">Explorer les boutiques →</a>
+  </div>
+
+  <div class="reveal-group grid md:grid-cols-3 gap-px bg-white/10 border border-white/10 rounded-3xl overflow-hidden">
+    <div class="reveal-item group relative p-10 bg-ink hover:bg-ink-3 transition-colors duration-500 min-h-[420px] md:min-h-[460px] flex flex-col justify-end">
+      <div class="absolute inset-0 text-white/10 lattice-bg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div class="absolute top-9 left-9 font-mono text-[11px] tracking-[0.2em] text-terracotta-2 uppercase">01 · SHOP</div>
+      <div class="relative w-11 h-11 mb-7 text-terracotta-2"><svg class="w-full h-full"><use href="#icon-bag"/></svg></div>
+      <h3 class="relative font-display fv-display text-2xl mb-3" data-fr="Shopping" data-en="Shopping">Shopping</h3>
+      <p class="relative text-white/60 text-sm leading-relaxed max-w-xs" data-fr="Plus de 130 magasins couvrant mode, beauté, sport, maison, accessoires et bien plus."
+         data-en="More than 130 stores covering fashion, beauty, sport, home, accessories and more.">Plus de 130 magasins couvrant mode, beauté, sport, maison, accessoires et bien plus.</p>
+    </div>
+    <div class="reveal-item group relative p-10 bg-ink hover:bg-ink-3 transition-colors duration-500 min-h-[300px] flex flex-col justify-end">
+      <div class="absolute inset-0 text-white/10 lattice-bg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div class="absolute top-9 left-9 font-mono text-[11px] tracking-[0.2em] text-terracotta-2 uppercase">02 · FOOD</div>
+      <div class="relative w-11 h-11 mb-7 text-terracotta-2"><svg class="w-full h-full"><use href="#icon-fork"/></svg></div>
+      <h3 class="relative font-display fv-display text-2xl mb-3" data-fr="Restaurants" data-en="Restaurants">Restaurants</h3>
+      <p class="relative text-white/60 text-sm leading-relaxed max-w-xs" data-fr="Restaurants, fast-foods, glaciers, crêperies, pâtisseries et salons de thé."
+         data-en="Restaurants, fast food, ice cream, crêperies, pastry shops and tea rooms.">Restaurants, fast-foods, glaciers, crêperies, pâtisseries et salons de thé.</p>
+    </div>
+    <div class="reveal-item group relative p-10 bg-ink hover:bg-ink-3 transition-colors duration-500 min-h-[300px] flex flex-col justify-end">
+      <div class="absolute inset-0 text-white/10 lattice-bg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div class="absolute top-9 left-9 font-mono text-[11px] tracking-[0.2em] text-terracotta-2 uppercase">03 · SERVICES</div>
+      <div class="relative w-11 h-11 mb-7 text-terracotta-2"><svg class="w-full h-full"><use href="#icon-spark"/></svg></div>
+      <h3 class="relative font-display fv-display text-2xl mb-3" data-fr="Services" data-en="Services">Services</h3>
+      <p class="relative text-white/60 text-sm leading-relaxed max-w-xs" data-fr="Wi-Fi gratuit, parking, banques, poste, pressing, fleuriste, coworking et plus."
+         data-en="Free Wi-Fi, parking, banks, post office, dry cleaning, florist, coworking and more.">Wi-Fi gratuit, parking, banques, poste, pressing, fleuriste, coworking et plus.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<section class="relative overflow-hidden text-center bg-ink-2 border-y border-white/10 px-6 md:px-16 py-32 md:py-44">
+  <svg class="hidden md:block absolute top-1/2 -translate-y-1/2 -left-16 opacity-40 stroke-terracotta-dim fill-none -scale-x-100" width="240" height="320" viewBox="0 0 160 210"><use href="#horseshoeArch"/></svg>
+  <svg class="hidden md:block absolute top-1/2 -translate-y-1/2 -right-16 opacity-40 stroke-terracotta-dim fill-none" width="240" height="320" viewBox="0 0 160 210"><use href="#horseshoeArch"/></svg>
+  <p class="reveal-group relative z-10 font-display fv-italic-lead text-2xl md:text-4xl leading-snug max-w-3xl mx-auto text-sand/95"
+     data-fr="Une architecture pensée pour la lumière, le mouvement et la rencontre."
+     data-en="An architecture built for light, movement and gathering.">
+    <span class="reveal-item">Une architecture pensée pour la lumière, le mouvement et la rencontre.</span>
+  </p>
+  <span class="reveal-item relative z-10 block mt-8 font-mono text-xs tracking-[0.24em] text-stone" data-fr="MALL OF SFAX — SAKIET EZZIT" data-en="MALL OF SFAX — SAKIET EZZIT">MALL OF SFAX — SAKIET EZZIT</span>
+</section>
+
+<!-- BOUTIQUES + LOCATOR -->
+<section id="boutiques">
+  <div class="reveal-group px-6 md:px-16 pt-32 md:pt-40">
+    <div class="reveal-item inline-flex items-center gap-3 text-terracotta-2 font-mono text-[11px] tracking-[0.24em] uppercase mb-6">
+      <span class="text-stone">03</span><span>/ BOUTIQUES &amp; LOCALISATION</span>
+    </div>
+    <h2 class="reveal-item font-display fv-display text-4xl md:text-6xl tracking-tight" data-fr="Trouvez votre prochaine destination." data-en="Find your next destination.">Trouvez votre prochaine destination.</h2>
+    <p class="reveal-item mt-4 max-w-xl text-white/70" data-fr="Le répertoire des boutiques et la localisation du Mall, réunis au même endroit."
+       data-en="The store directory and the Mall's location, in one place.">Le répertoire des boutiques et la localisation du Mall, réunis au même endroit.</p>
+  </div>
+
+  <div class="mt-16 bg-ink-2 border-y border-white/10">
+    <div class="grid md:grid-cols-2 items-stretch min-h-[480px] md:min-h-[540px]">
+      <div class="reveal-group px-6 md:px-16 py-16 md:py-24 flex flex-col justify-center">
+        <div class="reveal-item inline-flex items-center gap-2 w-fit px-4 py-2.5 rounded-full bg-terracotta-2/10 border border-terracotta-2/30 text-terracotta-2 font-mono text-xs mb-7">
+          <svg class="w-3.5 h-3.5"><use href="#icon-pin"/></svg>
+          <span data-fr="Mall of Sfax · Sakiet Ezzit" data-en="Mall of Sfax · Sakiet Ezzit">Mall of Sfax · Sakiet Ezzit</span>
+        </div>
+        <h3 class="reveal-item font-display fv-display text-3xl md:text-4xl mb-4" data-fr="Comment nous trouver." data-en="How to find us.">Comment nous trouver.</h3>
+        <p class="reveal-item text-white/60 max-w-md leading-relaxed" data-fr="Km 10, Route de Tunis, Sakiet Ezzit, Sfax, Tunisie. Parking gratuit disponible sur place."
+           data-en="Km 10, Route de Tunis, Sakiet Ezzit, Sfax, Tunisia. Free parking available on site.">Km 10, Route de Tunis, Sakiet Ezzit, Sfax, Tunisie. Parking gratuit disponible sur place.</p>
+        <div class="reveal-item mt-8 flex gap-3 flex-wrap">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Mall+of+Sfax" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full px-7 py-4 text-sm font-semibold bg-terracotta-2 text-ink transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_44px_rgba(224,122,78,.28)]" data-fr="Itinéraire ↗" data-en="Get directions ↗">Itinéraire ↗</a>
+          <a href="tel:+21695999555" class="inline-flex items-center gap-2 rounded-full px-7 py-4 text-sm font-semibold border border-white/20 transition-all duration-500 hover:-translate-y-1 hover:border-terracotta-2 hover:text-terracotta-2" data-fr="Appeler le Mall" data-en="Call the Mall">Appeler le Mall</a>
+        </div>
+      </div>
+      <div class="reveal-item p-6 md:p-9 flex items-center justify-center bg-ink-3">
+        <div class="relative w-full h-full min-h-[360px] md:min-h-[420px] arch-clip overflow-hidden">
+          <iframe class="w-full h-full min-h-[360px] md:min-h-[420px] grayscale-[.4] contrast-[1.08] brightness-[.92]" src="https://www.google.com/maps?q=Mall+of+Sfax&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mall of Sfax — Google Maps"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sticky top-20 z-[100] bg-sand px-6 md:px-16 py-6 border-b border-black/10">
+    <input type="text" id="storeSearch" placeholder="Rechercher une boutique..."
+           data-placeholder-fr="Rechercher une boutique..." data-placeholder-en="Search for a store..."
+           class="w-full max-w-lg px-6 py-4 rounded-full border border-black/15 bg-white text-sand-ink outline-none mb-4 focus:border-terracotta focus:ring-4 focus:ring-terracotta/10 transition">
+    <div class="flex flex-wrap gap-2">
+      <button class="filter active font-mono text-xs tracking-wide px-4 py-2.5 rounded-full border border-black/15 bg-sand-ink text-white transition" data-filter="all" data-fr="Toutes" data-en="All">Toutes</button>
+      <button class="filter font-mono text-xs tracking-wide px-4 py-2.5 rounded-full border border-black/15 bg-white text-sand-ink hover:bg-sand-ink hover:text-white transition" data-filter="mode" data-fr="Mode" data-en="Fashion">Mode</button>
+      <button class="filter font-mono text-xs tracking-wide px-4 py-2.5 rounded-full border border-black/15 bg-white text-sand-ink hover:bg-sand-ink hover:text-white transition" data-filter="hyper" data-fr="Hypermarché" data-en="Hypermarket">Hypermarché</button>
+      <button class="filter font-mono text-xs tracking-wide px-4 py-2.5 rounded-full border border-black/15 bg-white text-sand-ink hover:bg-sand-ink hover:text-white transition" data-filter="food" data-fr="Restauration" data-en="Dining">Restauration</button>
+      <button class="filter font-mono text-xs tracking-wide px-4 py-2.5 rounded-full border border-black/15 bg-white text-sand-ink hover:bg-sand-ink hover:text-white transition" data-filter="services" data-fr="Services" data-en="Services">Services</button>
+    </div>
+  </div>
+
+  <div id="storeGrid" class="grid md:grid-cols-3 gap-px bg-black/10 bg-sand px-6 md:px-16">
+    <div class="store-card bg-sand hover:bg-white p-9 transition-colors duration-300" data-category="mode">
+      <div class="w-7 h-7 text-terracotta mb-5"><svg class="w-full h-full"><use href="#icon-shirt"/></svg></div>
+      <div class="font-mono text-[10px] tracking-[0.18em] text-terracotta uppercase">MODE · FASHION</div>
+      <h3 class="font-display fv-display text-xl mt-3 mb-2">LC Waikiki</h3>
+      <p class="text-black/60 text-sm leading-relaxed" data-fr="Mode homme, femme et enfant avec des collections accessibles."
+         data-en="Affordable fashion collections for men, women and children.">Mode homme, femme et enfant avec des collections accessibles.</p>
+      <a href="https://www.mallofsfax.tn/shops/lc-waikiki" target="_blank" class="inline-block mt-4 text-sand-ink font-bold text-sm border-b border-sand-ink pb-0.5" data-fr="Voir la boutique ↗" data-en="View store ↗">Voir la boutique ↗</a>
+    </div>
+    <div class="store-card bg-sand hover:bg-white p-9 transition-colors duration-300" data-category="mode">
+      <div class="w-7 h-7 text-terracotta mb-5"><svg class="w-full h-full"><use href="#icon-bag"/></svg></div>
+      <div class="font-mono text-[10px] tracking-[0.18em] text-terracotta uppercase">ACCESSOIRES · MODE</div>
+      <h3 class="font-display fv-display text-xl mt-3 mb-2">Parfois</h3>
+      <p class="text-black/60 text-sm leading-relaxed" data-fr="Sacs, accessoires et prêt-à-porter féminin." data-en="Bags, accessories and women's ready-to-wear.">Sacs, accessoires et prêt-à-porter féminin.</p>
+      <a href="https://mallofsfax.tn/shops/parfois" target="_blank" class="inline-block mt-4 text-sand-ink font-bold text-sm border-b border-sand-ink pb-0.5" data-fr="Voir la boutique ↗" data-en="View store ↗">Voir la boutique ↗</a>
+    </div>
+    <div class="store-card bg-sand hover:bg-white p-9 transition-colors duration-300" data-category="hyper">
+      <div class="w-7 h-7 text-terracotta mb-5"><svg class="w-full h-full"><use href="#icon-cart"/></svg></div>
+      <div class="font-mono text-[10px] tracking-[0.18em] text-terracotta uppercase">HYPERMARCHÉ</div>
+      <h3 class="font-display fv-display text-xl mt-3 mb-2">Carrefour</h3>
+      <p class="text-black/60 text-sm leading-relaxed" data-fr="L'hypermarché du Mall, ouvert tous les jours de 09:30 à 23:00."
+         data-en="The Mall's hypermarket, open every day from 09:30 to 23:00.">L'hypermarché du Mall, ouvert tous les jours de 09:30 à 23:00.</p>
+      <a href="https://www.mallofsfax.tn/shops/carrefour" target="_blank" class="inline-block mt-4 text-sand-ink font-bold text-sm border-b border-sand-ink pb-0.5" data-fr="Voir Carrefour ↗" data-en="View Carrefour ↗">Voir Carrefour ↗</a>
+    </div>
+  </div>
+
+  <div id="emptyState" class="hidden bg-sand text-black/40 text-center px-6 md:px-16 py-16">
+    <p data-fr="Aucune boutique ne correspond à votre recherche." data-en="No stores match your search.">Aucune boutique ne correspond à votre recherche.</p>
+  </div>
+
+  <div class="bg-sand text-black/60 text-sm border-t border-black/10 px-6 md:px-16 pt-14 pb-24">
+    <p data-fr="Cette sélection présente des enseignes vérifiées. Le répertoire complet (130+ boutiques) est disponible sur le site officiel du Mall."
+       data-en="This selection shows verified brands. The complete directory (130+ stores) is available on the Mall's official website.">Cette sélection présente des enseignes vérifiées. Le répertoire complet (130+ boutiques) est disponible sur le site officiel du Mall.</p>
+    <p class="mt-3"><a href="https://www.mallofsfax.tn/shops" target="_blank" rel="noopener" class="text-terracotta font-semibold" data-fr="Voir le répertoire officiel →" data-en="View official directory →">Voir le répertoire officiel →</a></p>
+  </div>
+</section>
+
+<!-- PRACTICAL INFO -->
+<section id="visit" class="px-6 md:px-16 py-32 md:py-40">
+  <div class="reveal-group inline-flex items-center gap-3 text-terracotta-2 font-mono text-[11px] tracking-[0.24em] uppercase mb-6">
+    <span class="reveal-item text-stone">04</span><span class="reveal-item">/ INFOS PRATIQUES</span>
+  </div>
+  <h2 class="reveal-group reveal-item font-display fv-display text-4xl md:text-6xl tracking-tight" data-fr="Planifiez votre visite." data-en="Plan your visit.">Planifiez votre visite.</h2>
+
+  <div class="reveal-group grid md:grid-cols-2 gap-5 mt-12">
+    <div class="reveal-item rounded-3xl border border-white/10 bg-ink-2 overflow-hidden">
+      <div class="px-9 pt-8">
+        <h3 class="font-display fv-display text-xl mb-1" data-fr="Horaires" data-en="Hours">Horaires</h3>
+        <span class="font-mono text-[11px] text-stone tracking-wide" data-fr="TOUS LES JOURS" data-en="EVERY DAY">TOUS LES JOURS</span>
+      </div>
+      <div class="px-9 py-4">
+        <div class="flex justify-between py-4 border-b border-white/10 text-sm text-white/70"><span data-fr="Boutiques · Dim → Jeu" data-en="Stores · Sun → Thu">Boutiques · Dim → Jeu</span><strong class="font-mono text-sand font-medium">10:00—21:00</strong></div>
+        <div class="flex justify-between py-4 border-b border-white/10 text-sm text-white/70"><span data-fr="Boutiques · Ven → Sam" data-en="Stores · Fri → Sat">Boutiques · Ven → Sam</span><strong class="font-mono text-sand font-medium">10:00—22:00</strong></div>
+        <div class="flex justify-between py-4 text-sm text-white/70"><span data-fr="Carrefour" data-en="Carrefour">Carrefour</span><strong class="font-mono text-sand font-medium">09:30—23:00</strong></div>
+      </div>
+      <div class="flex flex-wrap gap-2.5 px-9 pb-8">
+        <span class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/5 border border-white/10 text-xs"><svg class="w-4 h-4 text-terracotta-2"><use href="#icon-wifi"/></svg><span data-fr="Wi-Fi gratuit" data-en="Free Wi-Fi">Wi-Fi gratuit</span></span>
+        <span class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/5 border border-white/10 text-xs"><svg class="w-4 h-4 text-terracotta-2"><use href="#icon-park"/></svg><span data-fr="Parking gratuit" data-en="Free parking">Parking gratuit</span></span>
+        <span class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/5 border border-white/10 text-xs"><svg class="w-4 h-4 text-terracotta-2"><use href="#icon-briefcase"/></svg><span data-fr="Coworking" data-en="Coworking">Coworking</span></span>
+      </div>
+    </div>
+    <div class="reveal-item rounded-3xl border border-white/10 bg-ink-2 overflow-hidden">
+      <div class="px-9 pt-8">
+        <h3 class="font-display fv-display text-xl mb-1" data-fr="Contact" data-en="Contact">Contact</h3>
+        <span class="font-mono text-[11px] text-stone tracking-wide" data-fr="SAKIET EZZIT" data-en="SAKIET EZZIT">SAKIET EZZIT</span>
+      </div>
+      <div class="px-9 py-4">
+        <div class="flex justify-between py-4 border-b border-white/10 text-sm text-white/70"><span data-fr="Téléphone" data-en="Phone">Téléphone</span><strong class="font-mono text-sand font-medium"><a href="tel:+21695999555">+216 95 999 555</a></strong></div>
+        <div class="flex justify-between py-4 border-b border-white/10 text-sm text-white/70"><span data-fr="Email" data-en="Email">Email</span><strong class="font-mono text-sand font-medium"><a href="mailto:contact@mallofsfax.tn">contact@mallofsfax.tn</a></strong></div>
+        <div class="flex justify-between py-4 text-sm text-white/70"><span data-fr="Adresse" data-en="Address">Adresse</span><strong class="font-mono text-sand font-medium" data-fr="Km 10, Rte de Tunis" data-en="Km 10, Rte de Tunis">Km 10, Rte de Tunis</strong></div>
+      </div>
+      <div class="flex flex-wrap gap-2.5 px-9 pb-8">
+        <a class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/5 border border-white/10 text-xs hover:border-terracotta-2 hover:text-terracotta-2 transition-colors" href="https://www.google.com/maps/search/?api=1&query=Mall+of+Sfax" target="_blank" rel="noopener"><svg class="w-4 h-4 text-terracotta-2"><use href="#icon-pin"/></svg><span data-fr="Ouvrir Google Maps ↗" data-en="Open Google Maps ↗">Ouvrir Google Maps ↗</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="px-6 md:px-16 pb-32 md:pb-40">
+  <div class="reveal-group relative overflow-hidden rounded-3xl border border-white/10 p-10 md:p-16" style="background:linear-gradient(135deg, rgba(224,122,78,.1), transparent 65%), #131110;">
+    <div class="absolute inset-0 text-white/[0.05] lattice-bg"></div>
+    <div class="reveal-item relative inline-flex items-center gap-3 text-terracotta-2 font-mono text-[11px] tracking-[0.24em] uppercase mb-6">
+      <span class="text-stone">05</span><span>/ RESTEZ INFORMÉ</span>
+    </div>
+    <h2 class="reveal-item relative font-display fv-display text-3xl md:text-5xl leading-tight mb-5" data-fr="Les nouveautés.<br>Les bons plans." data-en="What's new.<br>What's happening.">Les nouveautés.<br>Les bons plans.</h2>
+    <p class="reveal-item relative text-white/60 max-w-md mb-8" data-fr="Inscrivez-vous à la newsletter du Mall pour suivre les nouveautés et les offres."
+       data-en="Subscribe to the Mall newsletter to follow new updates and offers.">Inscrivez-vous à la newsletter du Mall pour suivre les nouveautés et les offres.</p>
+    <form id="newsletterForm" class="reveal-item relative flex flex-col sm:flex-row max-w-lg gap-3">
+      <input type="email" id="email" required placeholder="Votre adresse email" data-placeholder-fr="Votre adresse email" data-placeholder-en="Your email address"
+             class="flex-1 min-w-0 px-6 py-4 rounded-full border border-white/15 bg-white/5 text-sand outline-none placeholder-white/40 focus:border-terracotta-2 transition">
+      <button type="submit" class="rounded-full px-7 py-4 bg-terracotta-2 text-ink font-bold transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(224,122,78,.3)]" data-fr="S'inscrire" data-en="Subscribe">S'inscrire</button>
+    </form>
+    <p id="newsletterMsg" class="relative hidden mt-4 text-terracotta-2 text-sm"></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="relative overflow-hidden bg-[#070605] border-t border-white/10 px-6 md:px-16 pt-20 pb-8">
+  <div class="absolute -right-10 -bottom-32 w-80 h-80 text-white/[0.05] lattice-bg" aria-hidden="true"></div>
+  <div class="relative grid md:grid-cols-4 gap-10 pb-12">
+    <div class="md:col-span-2">
+      <div class="font-display fv-display text-2xl mb-4">MALL<em class="not-italic text-terracotta-2">.</em>SFAX</div>
+      <p class="text-white/40 text-sm max-w-xs leading-relaxed" data-fr="Une destination shopping, restauration, loisirs et services à Sakiet Ezzit." data-en="A destination for shopping, dining, entertainment and services in Sakiet Ezzit.">Une destination shopping, restauration, loisirs et services à Sakiet Ezzit.</p>
+    </div>
+    <div>
+      <div class="font-mono text-[11px] tracking-[0.1em] uppercase text-sand mb-4" data-fr="Navigation" data-en="Navigation">Navigation</div>
+      <a data-scroll-target="boutiques" class="block text-white/50 hover:text-terracotta-2 transition-colors text-sm my-2.5 cursor-pointer" data-fr="Boutiques" data-en="Stores">Boutiques</a>
+      <a data-scroll-target="visit" class="block text-white/50 hover:text-terracotta-2 transition-colors text-sm my-2.5 cursor-pointer" data-fr="Infos pratiques" data-en="Visit">Infos pratiques</a>
+      <a data-scroll-target="location" class="block text-white/50 hover:text-terracotta-2 transition-colors text-sm my-2.5 cursor-pointer" data-fr="Localisation" data-en="Location">Localisation</a>
+    </div>
+    <div>
+      <div class="font-mono text-[11px] tracking-[0.1em] uppercase text-sand mb-4" data-fr="Contact" data-en="Contact">Contact</div>
+      <a href="tel:+21695999555" class="block text-white/50 hover:text-terracotta-2 transition-colors text-sm my-2.5">+216 95 999 555</a>
+      <a href="mailto:contact@mallofsfax.tn" class="block text-white/50 hover:text-terracotta-2 transition-colors text-sm my-2.5">contact@mallofsfax.tn</a>
+      <a href="https://www.google.com/maps/search/?api=1&query=Mall+of+Sfax" target="_blank" class="block text-white/50 hover:text-terracotta-2 transition-colors text-sm my-2.5" data-fr="Localisation ↗" data-en="Location ↗">Localisation ↗</a>
+    </div>
+  </div>
+  <div class="relative border-t border-white/10 pt-6 flex justify-between flex-wrap gap-3 text-xs font-mono text-white/25">
+    <span>© 2026 MALL OF SFAX — PROTOTYPE CONCEPT</span>
+    <a href="https://www.mallofsfax.tn/" target="_blank" class="hover:text-terracotta-2 transition-colors" data-fr="SITE OFFICIEL ↗" data-en="OFFICIAL SITE ↗">SITE OFFICIEL ↗</a>
+  </div>
+</footer>
+
+<!-- CDN: GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script>
+(function(){
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+  /* ---------- language toggle ---------- */
+  let currentLanguage = localStorage.getItem('mos_lang') || 'fr';
+  const languageBtn = document.getElementById('languageBtn');
+  function updateLanguage(){
+    document.documentElement.lang = currentLanguage;
+    document.querySelectorAll('[data-fr]').forEach(el=>{
+      const v = el.getAttribute('data-' + currentLanguage);
+      if(v !== null) el.innerHTML = v;
+    });
+    document.querySelectorAll('[data-placeholder-fr]').forEach(input=>{
+      input.placeholder = input.getAttribute('data-placeholder-' + currentLanguage);
+    });
+    if(languageBtn) languageBtn.textContent = currentLanguage === 'fr' ? 'FR / EN' : 'EN / FR';
+    localStorage.setItem('mos_lang', currentLanguage);
+  }
+  languageBtn && languageBtn.addEventListener('click', ()=>{
+    currentLanguage = currentLanguage === 'fr' ? 'en' : 'fr';
+    updateLanguage();
+  });
+  window.MOS_getLang = () => currentLanguage;
+  updateLanguage();
+
+  /* ---------- section routing ---------- */
+  document.querySelectorAll('[data-scroll-target]').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const target = document.getElementById(el.dataset.scrollTarget);
+      if(!target) return;
+      const nav = document.getElementById('nav');
+      const offset = (nav ? nav.offsetHeight : 0) + 8;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: prefersReduced ? 'auto' : 'smooth' });
+    });
+  });
+
+  /* ---------- nav solid-on-scroll ---------- */
+  const nav = document.getElementById('nav');
+  const setSolid = ()=> {
+    if(window.scrollY > 40){ nav.classList.add('bg-ink/90','border-white/10'); nav.classList.remove('bg-ink/40'); }
+    else { nav.classList.remove('bg-ink/90','border-white/10'); nav.classList.add('bg-ink/40'); }
+  };
+  setSolid();
+  window.addEventListener('scroll', setSolid, { passive:true });
+
+  /* ---------- mobile menu ---------- */
+  const burger = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', ()=>{
+    const open = mobileMenu.classList.toggle('opacity-100');
+    mobileMenu.classList.toggle('translate-y-0');
+    mobileMenu.classList.toggle('pointer-events-auto');
+    mobileMenu.classList.toggle('opacity-0');
+    mobileMenu.classList.toggle('-translate-y-2');
+    mobileMenu.classList.toggle('pointer-events-none');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=>{
+    mobileMenu.classList.add('opacity-0','-translate-y-2','pointer-events-none');
+    mobileMenu.classList.remove('opacity-100','translate-y-0','pointer-events-auto');
+  }));
+
+  /* ---------- newsletter demo ---------- */
+  const form = document.getElementById('newsletterForm');
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const msg = document.getElementById('newsletterMsg');
+    msg.classList.remove('hidden');
+    msg.textContent = window.MOS_getLang() === 'fr'
+      ? 'Merci ! Le formulaire est prêt à être connecté au système newsletter du Mall.'
+      : "Thank you! The form is ready to be connected to the Mall's newsletter system.";
+    form.reset();
+  });
+
+  /* ---------- directory search / filter ---------- */
+  const search = document.getElementById('storeSearch');
+  const stores = document.querySelectorAll('.store-card');
+  const filters = document.querySelectorAll('.filter');
+  const empty = document.getElementById('emptyState');
+  let activeFilter = 'all';
+  function applyDirectoryState(){
+    const query = (search.value || '').toLowerCase().trim();
+    let visible = 0;
+    stores.forEach(card=>{
+      const matchesFilter = activeFilter === 'all' || card.dataset.category === activeFilter;
+      const matchesSearch = card.innerText.toLowerCase().includes(query);
+      const show = matchesFilter && matchesSearch;
+      card.style.display = show ? '' : 'none';
+      if(show) visible++;
+    });
+    empty.classList.toggle('hidden', visible !== 0);
+  }
+  search.addEventListener('input', applyDirectoryState);
+  filters.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      filters.forEach(b=>{ b.classList.remove('active','bg-sand-ink','text-white'); b.classList.add('bg-white','text-sand-ink'); });
+      btn.classList.add('active','bg-sand-ink','text-white'); btn.classList.remove('bg-white','text-sand-ink');
+      activeFilter = btn.dataset.filter;
+      applyDirectoryState();
+    });
+  });
+  applyDirectoryState();
+
+  /* ---------- custom cursor (desktop only) ---------- */
+  if(!prefersReduced && !isTouch){
+    const ring = document.getElementById('cursorRing');
+    const dot = document.getElementById('cursorDot');
+    let rx=innerWidth/2, ry=innerHeight/2, mx=rx, my=ry;
+    window.addEventListener('mousemove', (e)=>{ mx=e.clientX; my=e.clientY; dot.style.transform=`translate(${mx}px,${my}px) translate(-50%,-50%)`; });
+    (function loop(){ rx += (mx-rx)*.16; ry += (my-ry)*.16; ring.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%)`; requestAnimationFrame(loop); })();
+    document.querySelectorAll('a,button,.store-card,input').forEach(el=>{
+      el.addEventListener('mouseenter', ()=> ring.classList.add('big'));
+      el.addEventListener('mouseleave', ()=> ring.classList.remove('big'));
+    });
+  } else {
+    document.getElementById('cursorRing').style.display='none';
+    document.getElementById('cursorDot').style.display='none';
+  }
+})();
+</script>
+
+<script>
+/* ==============================================================
+   GSAP — hero load-in stagger + ScrollTrigger reveals
+============================================================== */
+(function(){
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!window.gsap) return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ---------- split hero wordmark into chars ---------- */
+  function splitToChars(el){
+    const words = el.textContent.trim().split(/\s+/);
+    el.textContent = '';
+    words.forEach((word, wi)=>{
+      const line = document.createElement('span');
+      line.style.display = 'inline-block';
+      line.style.overflow = 'hidden';
+      line.style.padding = '0.06em 0.05em';
+      [...word].forEach(ch=>{
+        const c = document.createElement('span');
+        c.className = 'char';
+        c.textContent = ch;
+        line.appendChild(c);
+      });
+      el.appendChild(line);
+      if(wi < words.length - 1) el.appendChild(document.createTextNode(' '));
+    });
+    return el.querySelectorAll('.char');
+  }
+
+  const wordmark = document.getElementById('heroWordmark');
+  const chars = splitToChars(wordmark);
+  const eyebrow = document.getElementById('heroEyebrow');
+  const tagline = document.getElementById('heroTagline');
+  const scrollCue = document.getElementById('heroScrollCue');
+  const dockedLogo = document.getElementById('dockedLogo');
+  const archLayers = document.querySelectorAll('.arch-layer');
+
+  /* ---------- HERO: load-in stagger entry ---------- */
+  gsap.set(chars, { y: 46, opacity: 0, rotateX: -35, transformOrigin: '50% 100%' });
+
+  const load = gsap.timeline({ delay: prefersReduced ? 0.1 : 0.3 });
+  load
+    .to(archLayers, {
+      opacity: (i, t) => parseFloat(t.dataset.targetOpacity) || .3,
+      duration: prefersReduced ? .01 : 1.4, ease:'power2.out', stagger:.12
+    }, 0)
+    .to(eyebrow, { opacity: 1, y: 0, duration:.6, ease:'power2.out' }, .1)
+    .to(chars, {
+      y:0, opacity:1, rotateX:0,
+      duration: prefersReduced ? .01 : .9, ease:'expo.out',
+      stagger: prefersReduced ? 0 : { each:.032, from:'center' }
+    }, .25)
+    .to(tagline, { opacity:1, y:0, duration:.7, ease:'power2.out' }, '-=.55')
+    .to(scrollCue, { opacity:1, duration:.6, ease:'power2.out' }, '-=.4');
+
+  /* hero -> nav docked logo, and gentle release on scroll past hero */
+  if(!prefersReduced){
+    ScrollTrigger.create({
+      trigger: '#hero', start:'top top', end:'bottom top', scrub:.6,
+      onUpdate: self => {
+        if(self.progress > .5 && !dockedLogo.classList.contains('opacity-100')){
+          dockedLogo.classList.remove('opacity-0'); dockedLogo.classList.add('opacity-100','transition-opacity','duration-500');
+        }
+      }
+    });
+    gsap.to(wordmark, {
+      scale:.9, opacity:.4, y:-40, ease:'none',
+      scrollTrigger:{ trigger:'#hero', start:'top top', end:'bottom top', scrub:.6 }
+    });
+    gsap.to([eyebrow, tagline, scrollCue], {
+      opacity:0, y:-16, ease:'none',
+      scrollTrigger:{ trigger:'#hero', start:'top top', end:'40% top', scrub:.6 }
+    });
+    archLayers.forEach((layer,i)=>{
+      const depth = parseFloat(layer.dataset.depth) || .3;
+      gsap.to(layer, {
+        y: -160 * depth, opacity:0, ease:'none',
+        scrollTrigger:{ trigger:'#hero', start:'top top', end:'bottom top', scrub:.6 }
+      });
+    });
+  } else {
+    dockedLogo.classList.remove('opacity-0'); dockedLogo.classList.add('opacity-100');
+  }
+
+  /* ---------- ScrollTrigger reveals for every other section ---------- */
+  document.querySelectorAll('.reveal-group').forEach(group=>{
+    const items = group.querySelectorAll('.reveal-item');
+    const targets = items.length ? items : [group];
+    gsap.set(targets, { opacity:0, y: prefersReduced ? 0 : 34 });
+    gsap.to(targets, {
+      opacity:1, y:0,
+      duration: prefersReduced ? .01 : .9,
+      ease:'power3.out',
+      stagger: prefersReduced ? 0 : .09,
+      scrollTrigger:{
+        trigger: group,
+        start:'top 85%',
+        toggleActions:'play none none none'
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
