@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-zinc-950">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mall of Sfax — The Region's Premier Shopping Destination</title>
+  <meta name="description" content="Mall of Sfax — 130+ stores, a hypermarket, dining and leisure on the Tunis Road, Sakiet Ezzit, Sfax. Shopping for the whole family." />
+  <meta name="theme-color" content="#09090b" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Inter"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            gold: {
+              300: '#e8d5a3',
+              400: '#d4b876',
+              500: '#c2a04f',
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { -webkit-font-smoothing: antialiased; }
+    ::selection { background: #c2a04f; color: #09090b; }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #09090b; }
+    ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+
+    .glass {
+      background: rgba(24, 24, 27, 0.55);
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .grain {
+      background-image: radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 3px 3px;
+    }
+    .gold-text {
+      background: linear-gradient(120deg, #e8d5a3, #c2a04f 55%, #8a6d2f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-line { overflow: hidden; }
+    .will-reveal { opacity: 0; }
+  </style>
+</head>
+
+<body class="bg-zinc-950 text-zinc-100 font-sans antialiased overflow-x-hidden">
+
+  <!-- Ambient glow -->
+  <div class="pointer-events-none fixed inset-0 -z-10">
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 h-[520px] w-[520px] rounded-full bg-gold-500/10 blur-[140px]"></div>
+    <div class="absolute bottom-0 right-0 h-[420px] w-[420px] rounded-full bg-zinc-700/20 blur-[120px]"></div>
+    <div class="absolute inset-0 grain opacity-60"></div>
+  </div>
+
+  <!-- ===================== HERO ===================== -->
+  <header class="relative mx-auto max-w-7xl px-6 pt-16 pb-10 md:pt-24">
+    <div class="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-zinc-500" data-load="fade-down">
+      <span>Sakiet Ezzit &middot; Sfax</span>
+      <span class="hidden sm:inline">Est. Retail &middot; Tunisia</span>
+    </div>
+
+    <div class="mt-14 md:mt-24">
+      <p class="hero-line" data-load="hero-sub">
+        <span class="inline-block text-sm uppercase tracking-[0.4em] text-gold-400">The Region&apos;s Premier Destination</span>
+      </p>
+
+      <h1 class="mt-6 font-serif font-semibold leading-[0.9] tracking-tight text-[16vw] md:text-[11rem]">
+        <span class="hero-line block"><span data-load="hero-word" class="inline-block">Mall</span></span>
+        <span class="hero-line block italic gold-text"><span data-load="hero-word" class="inline-block">of Sfax</span></span>
+      </h1>
+
+      <div class="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+        <p class="max-w-md text-lg leading-relaxed text-zinc-400" data-load="fade-up">
+          More than 130 boutiques, an 8,000&nbsp;m&sup2; hypermarket, dining and leisure — shopping for the whole family, all tastes and every budget.
+        </p>
+        <a href="#visit" class="group inline-flex items-center gap-3 self-start rounded-full border border-zinc-700 px-6 py-3 text-sm uppercase tracking-widest text-zinc-200 transition hover:border-gold-400 hover:text-gold-300" data-load="fade-up">
+          Plan your visit
+          <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== BENTO GRID ===================== -->
+  <main class="mx-auto max-w-7xl px-6 pb-40">
+    <section class="grid grid-cols-1 gap-4 md:grid-cols-6 md:auto-rows-[minmax(0,_1fr)]">
+
+      <!-- Signature statement -->
+      <article class="will-reveal glass rounded-3xl p-8 md:col-span-4 md:row-span-2 flex flex-col justify-between min-h-[320px]">
+        <span class="text-xs uppercase tracking-[0.3em] text-zinc-500">The Offering</span>
+        <div>
+          <h2 class="font-serif text-4xl md:text-6xl leading-[1.05] text-balance">
+            Fashion, leather, perfumery &amp; beauty under
+            <span class="italic gold-text">one roof</span>.
+          </h2>
+          <div class="mt-8 flex flex-wrap gap-x-10 gap-y-4">
+            <div>
+              <p class="font-serif text-5xl gold-text">130+</p>
+              <p class="mt-1 text-xs uppercase tracking-widest text-zinc-500">Boutiques</p>
+            </div>
+            <div>
+              <p class="font-serif text-5xl gold-text">8,000</p>
+              <p class="mt-1 text-xs uppercase tracking-widest text-zinc-500">m&sup2; Hypermarket</p>
+            </div>
+            <div>
+              <p class="font-serif text-5xl gold-text">1</p>
+              <p class="mt-1 text-xs uppercase tracking-widest text-zinc-500">Destination</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Rating -->
+      <article class="will-reveal glass rounded-3xl p-8 md:col-span-2 flex flex-col justify-between min-h-[150px]">
+        <span class="text-xs uppercase tracking-[0.3em] text-zinc-500">Guest Sentiment</span>
+        <div>
+          <div class="flex items-baseline gap-2">
+            <span class="font-serif text-6xl gold-text">4.9</span>
+            <span class="text-gold-400 text-xl">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+          <p class="mt-2 text-sm text-zinc-400">Strong average across ~60&ndash;70 public reviews.</p>
+        </div>
+      </article>
+
+      <!-- Location -->
+      <article id="visit" class="will-reveal glass rounded-3xl p-8 md:col-span-2 flex flex-col justify-between min-h-[150px]">
+        <span class="text-xs uppercase tracking-[0.3em] text-zinc-500">Location</span>
+        <div>
+          <p class="font-serif text-2xl leading-snug">Km 10, Rte de Tunis</p>
+          <p class="text-zinc-400">Sakiet Ezzit, Sfax, Tunisia</p>
+          <p class="mt-3 font-mono text-xs text-gold-400">34.8419675, 10.762127</p>
+        </div>
+      </article>
+
+      <!-- Hours -->
+      <article class="will-reveal glass rounded-3xl p-8 md:col-span-3 flex flex-col min-h-[240px]">
+        <span class="text-xs uppercase tracking-[0.3em] text-zinc-500">Opening Hours</span>
+        <div class="mt-6 space-y-4 text-sm">
+          <div class="flex items-center justify-between border-b border-white/5 pb-3">
+            <span class="text-zinc-300">Hypermarket</span>
+            <span class="text-right text-zinc-400">
+              <span class="block">Sun&ndash;Thu &middot; <span class="text-zinc-100">09:30&ndash;22:00</span></span>
+              <span class="block">Fri&ndash;Sat &middot; <span class="text-gold-300">09:30&ndash;23:00</span></span>
+            </span>
+          </div>
+          <div class="flex items-center justify-between border-b border-white/5 pb-3">
+            <span class="text-zinc-300">Restaurants &amp; Play</span>
+            <span class="text-right text-zinc-400">
+              <span class="block">Sun&ndash;Thu &middot; <span class="text-zinc-100">10:00&ndash;22:00</span></span>
+              <span class="block">Fri&ndash;Sat &middot; <span class="text-gold-300">10:00&ndash;23:00</span></span>
+            </span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-zinc-300">Boutiques</span>
+            <span class="text-right text-zinc-400">
+              <span class="block">Sun&ndash;Thu &middot; <span class="text-zinc-100">10:00&ndash;21:00</span></span>
+              <span class="block">Fri&ndash;Sat &middot; <span class="text-gold-300">10:00&ndash;22:00</span></span>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Services -->
+      <article class="will-reveal glass rounded-3xl p-8 md:col-span-3 flex flex-col min-h-[240px]">
+        <span class="text-xs uppercase tracking-[0.3em] text-zinc-500">On-Site Services</span>
+        <ul class="mt-6 grid grid-cols-2 gap-x-6 gap-y-3 text-sm text-zinc-300">
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-gold-400"></span>Free Wi-Fi</li>
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-gold-400"></span>Banks &amp; ATMs</li>
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-gold-400"></span>Currency Exchange</li>
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-gold-400"></span>Post Office</li>
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-gold-400"></span>Free Parking</li>
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-gold-400"></span>Prayer Room</li>
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-gold-400"></span>Coworking Space</li>
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-gold-400"></span>Dry Cleaning</li>
+          <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-full bg-gold-400"></span>Florist</li>
+        </ul>
+      </article>
+
+      <!-- Brands -->
+      <article class="will-reveal glass rounded-3xl p-8 md:col-span-4 flex flex-col justify-between min-h-[180px]">
+        <span class="text-xs uppercase tracking-[0.3em] text-zinc-500">Featured Brands</span>
+        <div class="mt-6 flex flex-wrap items-center gap-x-8 gap-y-4 font-serif text-2xl md:text-3xl text-zinc-200">
+          <span>Zara</span>
+          <span class="text-zinc-600">&middot;</span>
+          <span>Bershka</span>
+          <span class="text-zinc-600">&middot;</span>
+          <span>Massimo Dutti</span>
+          <span class="text-zinc-600">&middot;</span>
+          <span>Decathlon</span>
+          <span class="text-zinc-600">&middot;</span>
+          <span>Baristas</span>
+        </div>
+      </article>
+
+      <!-- Contact -->
+      <article class="will-reveal glass rounded-3xl p-8 md:col-span-2 flex flex-col justify-between min-h-[180px]">
+        <span class="text-xs uppercase tracking-[0.3em] text-zinc-500">Contact</span>
+        <div class="space-y-3">
+          <a href="tel:+21695999555" class="block font-serif text-2xl text-gold-300 hover:text-gold-400 transition">+216 95 999 555</a>
+          <a href="mailto:contact@mallofsfax.tn" class="block text-sm text-zinc-400 hover:text-zinc-200 transition">contact@mallofsfax.tn</a>
+          <a href="https://mallofsfax.tn/" target="_blank" rel="noopener" class="block text-sm text-zinc-400 hover:text-zinc-200 transition">mallofsfax.tn &rarr;</a>
+        </div>
+      </article>
+
+      <!-- Review highlight -->
+      <article class="will-reveal glass rounded-3xl p-8 md:col-span-6 flex flex-col md:flex-row md:items-center gap-6 justify-between">
+        <blockquote class="font-serif text-2xl md:text-3xl italic leading-snug text-balance text-zinc-200 max-w-3xl">
+          &ldquo;Modern architecture, a wide selection of brands, and a convenient location on the main Tunis road — with parking, dining and family areas that make a full day easy.&rdquo;
+        </blockquote>
+        <p class="shrink-0 text-xs uppercase tracking-[0.3em] text-zinc-500">Recurring visitor themes</p>
+      </article>
+
+    </section>
+
+    <p class="mt-8 text-xs text-zinc-600 leading-relaxed max-w-2xl">
+      Note: rating figures reflect approximate public Google Maps aggregates and update continuously. The quoted highlight summarizes recurring visitor themes rather than a single verbatim review.
+    </p>
+  </main>
+
+  <!-- ===================== FLOATING GLASS PILL NAVBAR ===================== -->
+  <nav class="fixed bottom-6 left-1/2 z-50 -translate-x-1/2" data-load="nav">
+    <div class="glass flex items-center gap-1 rounded-full px-2 py-2 shadow-2xl shadow-black/50">
+      <a href="#top" class="rounded-full px-4 py-2 text-sm text-zinc-300 transition hover:bg-white/10 hover:text-white">Home</a>
+      <a href="#visit" class="rounded-full px-4 py-2 text-sm text-zinc-300 transition hover:bg-white/10 hover:text-white">Visit</a>
+      <a href="tel:+21695999555" class="rounded-full px-4 py-2 text-sm text-zinc-300 transition hover:bg-white/10 hover:text-white">Call</a>
+      <a href="https://mallofsfax.tn/" target="_blank" rel="noopener" class="rounded-full bg-gold-400 px-5 py-2 text-sm font-medium text-zinc-950 transition hover:bg-gold-300">
+        Website
+      </a>
+    </div>
+  </nav>
+
+  <span id="top" class="sr-only">Top</span>
+
+  <!-- ===================== GSAP ANIMATIONS ===================== -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    window.addEventListener('load', () => {
+      // Respect reduced motion
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) {
+        gsap.set('.will-reveal, [data-load]', { clearProps: 'all', opacity: 1 });
+        return;
+      }
+
+      // ---- Hero load sequence ----
+      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+      tl.from('[data-load="fade-down"]', { y: -20, opacity: 0, duration: 0.8 })
+        .from('[data-load="hero-sub"]', { y: 30, opacity: 0, duration: 0.8 }, '-=0.4')
+        .from('[data-load="hero-word"]', {
+          yPercent: 120,
+          duration: 1.1,
+          stagger: 0.12,
+          ease: 'power4.out',
+        }, '-=0.5')
+        .from('[data-load="fade-up"]', { y: 30, opacity: 0, duration: 0.8, stagger: 0.12 }, '-=0.6')
+        .from('[data-load="nav"]', { y: 60, opacity: 0, duration: 0.9 }, '-=0.5');
+
+      // ---- Scroll-triggered bento reveals ----
+      gsap.utils.toArray('.will-reveal').forEach((el) => {
+        gsap.to(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+          },
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: 'power3.out',
+        });
+        gsap.set(el, { y: 40 });
+      });
+    });
+  </script>
+</body>
+</html>
